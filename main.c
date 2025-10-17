@@ -5,7 +5,7 @@
 
 
 
-
+void checkLogin();
 
 static void activate(GtkApplication *app,gpointer user_data) {
     GtkWidget *windowLogin;
@@ -61,12 +61,14 @@ static void activate(GtkApplication *app,gpointer user_data) {
     //Initialisation of buttonLogin
     buttonLogin = gtk_button_new_with_label("Login");
     gtk_grid_attach(GTK_GRID(gridParentLogin),buttonLogin,1,2,1,1);
-
-
-
+    g_signal_connect(buttonLogin,"clicked",G_CALLBACK(checkLogin),NULL);
 
 }
 
+
+void checkLogin() {
+
+}
 
 
 
