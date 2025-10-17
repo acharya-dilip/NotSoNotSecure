@@ -36,6 +36,12 @@ static void activate(GtkApplication *app,gpointer user_data) {
     //Initalisation of labelGmail
     labelGmail = gtk_label_new("Gmail:");
     gtk_grid_attach(GTK_GRID(gridParentLogin),labelGmail,0,0,1,1);
+    //Margins & paddings
+    gtk_widget_set_halign(labelGmail,GTK_ALIGN_START);
+    gtk_widget_set_margin_start(labelGmail,10);
+    gtk_widget_set_margin_end(labelGmail,10);
+
+
 
     //Initialisation of entryGmail
     entryGmail = gtk_entry_new();
