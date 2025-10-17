@@ -31,6 +31,8 @@ static void activate(GtkApplication *app,gpointer user_data) {
     gtk_widget_set_margin_start(gridParentLogin,10);
     gtk_widget_set_margin_end(gridParentLogin,10);
     gtk_widget_set_margin_top(gridParentLogin,10);
+    gtk_widget_set_margin_bottom(gridParentLogin,10);
+
 
 
     //Initalisation of labelGmail
@@ -38,7 +40,6 @@ static void activate(GtkApplication *app,gpointer user_data) {
     gtk_grid_attach(GTK_GRID(gridParentLogin),labelGmail,0,0,1,1);
     //Margins & paddings
     gtk_widget_set_halign(labelGmail,GTK_ALIGN_START);
-    gtk_widget_set_margin_start(labelGmail,10);
     gtk_widget_set_margin_end(labelGmail,10);
 
 
@@ -46,6 +47,8 @@ static void activate(GtkApplication *app,gpointer user_data) {
     //Initialisation of entryGmail
     entryGmail = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParentLogin),entryGmail,1,0,1,1);
+    //Margins & Paddigns
+    gtk_widget_set_size_request(entryGmail,240,-1);
 
     //Initialisation of labelPassword
     labelPassword = gtk_label_new("Pass:");
