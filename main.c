@@ -94,6 +94,14 @@ void checkLogin() {
 
 void mainProgram() {
 
+    GtkWidget *windowMain;
+    GtkWidget *gridParent;
+    GtkWidget *entryUserID;
+    GtkWidget *textviewChat;
+    GtkWidget *textviewMessage;
+    GtkWidget *buttonSendMessage;
+
+
 }
 
 
