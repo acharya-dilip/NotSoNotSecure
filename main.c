@@ -42,6 +42,9 @@ static void activate(GtkApplication *app,gpointer user_data) {
     entryPassword = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParentLogin),entryPassword,1,1,1,1);
 
+    //Initialisation of buttonLogin
+    buttonLogin = gtk_button_new_with_label("Login");
+    gtk_grid_attach(GTK_GRID(gridParentLogin),buttonLogin,1,2,1,1);
 
 
 
