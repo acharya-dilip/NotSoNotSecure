@@ -6,6 +6,7 @@
 
 
 void checkLogin();
+void mainProgram();
 
 //Global Variables from windowLogin
     GtkWidget *windowLogin;
@@ -83,10 +84,18 @@ void checkLogin() {
         if (result == CURLE_OK) {
             //hides the windowLogin window
             gtk_widget_set_visible(windowLogin,FALSE);
+            //Executes the main Program
+            mainProgram();
         }
         curl_easy_cleanup(curl);
     }
 }
+
+
+void mainProgram() {
+
+}
+
 
 
 
