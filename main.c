@@ -7,11 +7,14 @@
 
 void checkLogin();
 
-static void activate(GtkApplication *app,gpointer user_data) {
+//Global Variables from windowLogin
     GtkWidget *windowLogin;
-    GtkWidget *gridParentLogin;
     GtkWidget *entryGmail;
     GtkWidget *entryPassword;
+static void activate(GtkApplication *app,gpointer user_data) {
+
+    GtkWidget *gridParentLogin;
+
     GtkWidget *labelGmail;
     GtkWidget *labelPassword;
     GtkWidget *buttonLogin;
@@ -67,7 +70,21 @@ static void activate(GtkApplication *app,gpointer user_data) {
 
 
 void checkLogin() {
+    CURL *curl = curl_easy_init();
+    CURLcode result;
+    if (curl) {
+        //Initialisation of the gmail auth segment
+        curl_easy_setopt(curl,CURLOPT_URL,"smtp://smtp.gmail.com:587");
+        curl_easy_setopt(curl,CURLOPT_USE_SSL,(long)CURLUSESSL_ALL);
+        curl_easy_setopt(curl,CURLOPT_USERNAME,gtk_editable_get_text(GTK_EDITABLE(entryGmail)));
+        curl_easy_setopt(curl,CURLOPT_PASSWORD,gtk_editable_get_text(GTK_EDITABLE(entryPassword)));
 
+        result = curl_easy_perform(curl);
+        if (result == CURLE_OK) {
+
+        }
+        curl_easy_cleanup(curl);
+    }
 }
 
 
