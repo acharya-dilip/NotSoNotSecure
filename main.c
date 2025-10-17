@@ -81,7 +81,8 @@ void checkLogin() {
 
         result = curl_easy_perform(curl);
         if (result == CURLE_OK) {
-
+            //hides the windowLogin window
+            gtk_widget_set_visible(windowLogin,FALSE);
         }
         curl_easy_cleanup(curl);
     }
