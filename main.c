@@ -34,6 +34,11 @@ static void activate(GtkApplication *app,gpointer user_data) {
     entryGmail = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParentLogin),entryGmail,1,0,1,1);
 
+    //Initialisation of labelPassword
+    labelPassword = gtk_label_new("Pass:");
+    gtk_grid_attach(GTK_GRID(gridParentLogin),labelPassword,0,1,1,1);
+
+
 
 
 
