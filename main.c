@@ -8,6 +8,15 @@
 
 
 static void activate(GtkApplication *app,gpointer user_data) {
+    GtkWidget *windowLogin;
+    GtkWidget *entryGmail;
+    GtkWidget *entryPassword;
+    GtkWidget *labelGmail;
+    GtkWidget *labelPassword;
+    GtkWidget *buttonLogin;
+
+
+
 
 }
 
