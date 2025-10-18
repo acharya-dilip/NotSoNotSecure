@@ -97,6 +97,7 @@ void checkLogin() {
 
 //Globalised Variables from mainProgram
     GtkWidget *windowMain;
+    GtkWidget *entryUserID;
     GtkWidget *textviewChat;
     GtkWidget *entryMessage;
     GtkWidget *windowChat;
@@ -104,7 +105,6 @@ void mainProgram() {
 
     GtkWidget *gridParent;
     GtkWidget *labelUserID;
-    GtkWidget *entryUserID;
     GtkWidget *buttonSendMessage;
 
     //Init of windowMain
@@ -178,7 +178,9 @@ void sendMessage() {
     if (curl) {
         curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
         char message[1024];
-        snprintf(message,sizeof(message),"{\"text\": \"%s\"}",gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
+        snprintf(message, sizeof(message), "{\"text\": \"%s$ \\n %s\"}",
+                 gtk_editable_get_text(GTK_EDITABLE(entryUserID)),
+                 gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
         curl_easy_setopt(curl,CURLOPT_POSTFIELDS,message);
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
         curl_easy_perform(curl);
