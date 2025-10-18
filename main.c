@@ -105,7 +105,7 @@ void mainProgram() {
 
     //Init of windowMain
     windowMain = gtk_window_new();
-    gtk_window_set_default_size(GTK_WINDOW(windowMain),400,400);
+    gtk_window_set_default_size(GTK_WINDOW(windowMain),380,400);
     gtk_window_set_title(GTK_WINDOW(windowMain),"NotSoNotSecure");
     gtk_window_present(GTK_WINDOW(windowMain));
 
