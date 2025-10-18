@@ -96,6 +96,7 @@ void mainProgram() {
 
     GtkWidget *windowMain;
     GtkWidget *gridParent;
+    GtkWidget *labelUserID;
     GtkWidget *entryUserID;
     GtkWidget *textviewChat;
     GtkWidget *textviewMessage;
@@ -110,6 +111,10 @@ void mainProgram() {
     //Init of gridParent
     gridParent = gtk_grid_new();
     gtk_window_set_child(GTK_WINDOW(windowMain),gridParent);
+
+    //init of labelUserID
+    labelUserID = gtk_label_new("UserID:");
+    gtk_grid_attach(GTK_GRID(gridParent),labelUserID,0,0,1,1);
 
 
 
