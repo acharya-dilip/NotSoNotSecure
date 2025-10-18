@@ -175,6 +175,7 @@ void closeProgram() {
 
 void sendMessage() {
     CURL *curl=curl_easy_init();
+    CURLcode res;
     if (curl) {
         curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
         char message[1024];
@@ -185,6 +186,10 @@ void sendMessage() {
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
         curl_easy_perform(curl);
     }
+    if (res==CURLE_OK) {
+        gtk_editable_set_text(GTK_EDITABLE(entryMessage),"");
+    }
+
     curl_easy_cleanup(curl);
 }
 
