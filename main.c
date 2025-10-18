@@ -133,12 +133,14 @@ void mainProgram() {
     gtk_grid_attach(GTK_GRID(gridParent),textviewChat,0,1,5,8);
     //Margins & paddings
     gtk_widget_set_size_request(textviewChat,240,300);
-    gtk_widget_set_margin_top(textviewChat,15);
-    gtk_widget_set_margin_bottom(textviewChat,15);
+    gtk_widget_set_margin_top(textviewChat,10);
+    gtk_widget_set_margin_bottom(textviewChat,10);
 
     //Init of textviewMessage
     entryMessage = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParent),entryMessage,0,10,5,1);
+    //Margins & Paddings
+    gtk_widget_set_margin_bottom(entryMessage,10);
 
     //init of buttonSendMessage
     buttonSendMessage = gtk_button_new_with_label("Send");
