@@ -133,7 +133,7 @@ void mainProgram() {
     gtk_grid_attach(GTK_GRID(gridParent),textviewChat,0,1,5,8);
     gtk_text_view_set_editable(GTK_TEXT_VIEW(textviewChat),FALSE);
     //Margins & paddings
-    gtk_widget_set_size_request(textviewChat,240,300);
+    gtk_widget_set_size_request(textviewChat,340,300);
     gtk_widget_set_margin_top(textviewChat,10);
     gtk_widget_set_margin_bottom(textviewChat,10);
 
