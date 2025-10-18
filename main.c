@@ -129,6 +129,7 @@ void mainProgram() {
     //Init of entryUserID
     entryUserID = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParent),entryUserID,1,0,4,1);
+    gtk_editable_set_text(GTK_EDITABLE(entryUserID),gtk_editable_get_text(GTK_EDITABLE(entryGmail)));
     //margins & Paddings
     gtk_widget_set_halign(entryUserID,GTK_ALIGN_START);
     gtk_widget_set_size_request(entryUserID,290,-1);
@@ -154,8 +155,6 @@ void mainProgram() {
     gtk_grid_attach(GTK_GRID(gridParent),buttonSendMessage,0,14,5,1);
 
 }
-
-
 
 
 int main(int argc, char **argv){
