@@ -98,6 +98,7 @@ void checkLogin() {
     GtkWidget *windowMain;
     GtkWidget *textviewChat;
     GtkWidget *entryMessage;
+    GtkWidget *windowChat;
 void mainProgram() {
 
     GtkWidget *gridParent;
@@ -139,12 +140,18 @@ void mainProgram() {
 
     //Init of textviewChat
     textviewChat = gtk_text_view_new();
-    gtk_grid_attach(GTK_GRID(gridParent),textviewChat,0,1,5,8);
-    gtk_text_view_set_editable(GTK_TEXT_VIEW(textviewChat),FALSE);
+    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(textviewChat), GTK_WRAP_WORD_CHAR);
+
+    //Init of windowChat
+    windowChat = gtk_scrolled_window_new();
+    gtk_grid_attach(GTK_GRID(gridParent),windowChat,0,1,5,5);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(windowChat),textviewChat);
     //Margins & paddings
-    gtk_widget_set_size_request(textviewChat,340,300);
-    gtk_widget_set_margin_top(textviewChat,10);
-    gtk_widget_set_margin_bottom(textviewChat,10);
+    gtk_widget_set_hexpand(windowChat,FALSE);
+    gtk_widget_set_vexpand(windowChat,TRUE);
+    gtk_widget_set_size_request(windowChat,340,300);
+    gtk_widget_set_margin_top(windowChat,10);
+    gtk_widget_set_margin_bottom(windowChat,10);
 
     //Init of textviewMessage
     entryMessage = gtk_entry_new();
