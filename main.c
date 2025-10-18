@@ -8,6 +8,7 @@
 void checkLogin();
 void mainProgram();
 void sendMessage();
+void updateChat();
 void closeProgram();
 
 //Global Variables from windowLogin
@@ -193,6 +194,9 @@ void sendMessage() {
     curl_easy_cleanup(curl);
 }
 
+void updateChat() {
+
+}
 
 int main(int argc, char **argv){
     GtkApplication *app;
