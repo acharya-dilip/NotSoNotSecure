@@ -114,7 +114,10 @@ void mainProgram() {
     //Margins & Paddings
     gtk_widget_set_halign(gridParent,GTK_ALIGN_CENTER);
     gtk_widget_set_valign(gridParent,GTK_ALIGN_CENTER);
-
+    gtk_widget_set_margin_start(gridParent,15);
+    gtk_widget_set_margin_end(gridParent,15);
+    gtk_widget_set_margin_top(gridParent,15);
+    gtk_widget_set_margin_bottom(gridParent,15);
 
     //init of labelUserID
     labelUserID = gtk_label_new("UserID:");
