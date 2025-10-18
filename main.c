@@ -130,6 +130,10 @@ void mainProgram() {
     //Init of textviewChat
     textviewChat = gtk_text_view_new();
     gtk_grid_attach(GTK_GRID(gridParent),textviewChat,0,1,5,8);
+    //Margins & paddings
+    gtk_widget_set_size_request(textviewChat,240,300);
+    gtk_widget_set_margin_top(textviewChat,15);
+    gtk_widget_set_margin_bottom(textviewChat,15);
 
     //Init of textviewMessage
     textviewMessage = gtk_text_view_new();
