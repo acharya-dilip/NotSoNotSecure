@@ -177,9 +177,8 @@ void sendMessage() {
     CURL *curl=curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
-        curl_easy_setopt(curl,CURLOPT_POSTFIELDS,"cell=A1");
-        char message[2048];
-        snprintf(message,sizeof(message),"data=%s",gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
+        char message[1024];
+        snprintf(message,sizeof(message),"{\"text\": \"%s\"}",gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
         curl_easy_setopt(curl,CURLOPT_POSTFIELDS,message);
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
         curl_easy_perform(curl);
