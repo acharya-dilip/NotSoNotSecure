@@ -111,6 +111,10 @@ void mainProgram() {
     //Init of gridParent
     gridParent = gtk_grid_new();
     gtk_window_set_child(GTK_WINDOW(windowMain),gridParent);
+    //Margins & Paddings
+    gtk_widget_set_halign(gridParent,GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(gridParent,GTK_ALIGN_CENTER);
+
 
     //init of labelUserID
     labelUserID = gtk_label_new("UserID:");
