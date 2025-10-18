@@ -7,6 +7,7 @@
 
 void checkLogin();
 void mainProgram();
+void sendMessage();
 
 //Global Variables from windowLogin
     GtkWidget *windowLogin;
@@ -156,6 +157,10 @@ void mainProgram() {
 
 }
 
+void sendMessage() {
+
+
+}
 
 int main(int argc, char **argv){
     GtkApplication *app;
