@@ -124,7 +124,11 @@ void mainProgram() {
     textviewChat = gtk_text_view_new();
     gtk_grid_attach(GTK_GRID(gridParent),textviewChat,0,1,5,8);
 
+    //Init of textviewMessage
+    textviewMessage = gtk_text_view_new();
+    gtk_grid_attach(GTK_GRID(gridParent),textviewMessage,0,10,5,3);
 
+    //
 
 
 }
