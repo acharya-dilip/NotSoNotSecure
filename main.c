@@ -100,7 +100,7 @@ void mainProgram() {
     GtkWidget *labelUserID;
     GtkWidget *entryUserID;
     GtkWidget *textviewChat;
-    GtkWidget *textviewMessage;
+    GtkWidget *entryMessage;
     GtkWidget *buttonSendMessage;
 
     //Init of windowMain
@@ -137,12 +137,12 @@ void mainProgram() {
     gtk_widget_set_margin_bottom(textviewChat,15);
 
     //Init of textviewMessage
-    textviewMessage = gtk_text_view_new();
-    gtk_grid_attach(GTK_GRID(gridParent),textviewMessage,0,10,5,3);
+    entryMessage = gtk_entry_new();
+    gtk_grid_attach(GTK_GRID(gridParent),entryMessage,0,10,5,1);
 
     //init of buttonSendMessage
     buttonSendMessage = gtk_button_new_with_label("Send");
-    gtk_grid_attach(GTK_GRID(gridParent),buttonSendMessage,0,11,5,1);
+    gtk_grid_attach(GTK_GRID(gridParent),buttonSendMessage,0,14,5,1);
 
 }
 
