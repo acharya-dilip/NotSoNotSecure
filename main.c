@@ -132,6 +132,7 @@ void mainProgram() {
     //margins & Paddings
     gtk_widget_set_halign(entryUserID,GTK_ALIGN_START);
     gtk_widget_set_size_request(entryUserID,290,-1);
+    gtk_widget_set_margin_start(entryUserID,10);
 
     //Init of textviewChat
     textviewChat = gtk_text_view_new();
