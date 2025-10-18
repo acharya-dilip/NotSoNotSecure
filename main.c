@@ -94,14 +94,15 @@ void checkLogin() {
 }
 
 
+//Globalised Variables from mainProgram
+    GtkWidget *windowMain;
+    GtkWidget *textviewChat;
+    GtkWidget *entryMessage;
 void mainProgram() {
 
-    GtkWidget *windowMain;
     GtkWidget *gridParent;
     GtkWidget *labelUserID;
     GtkWidget *entryUserID;
-    GtkWidget *textviewChat;
-    GtkWidget *entryMessage;
     GtkWidget *buttonSendMessage;
 
     //Init of windowMain
@@ -158,6 +159,7 @@ void mainProgram() {
 }
 
 void sendMessage() {
+
 
 
 }
