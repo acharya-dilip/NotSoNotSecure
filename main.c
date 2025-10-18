@@ -155,6 +155,7 @@ void mainProgram() {
     //init of buttonSendMessage
     buttonSendMessage = gtk_button_new_with_label("Send");
     gtk_grid_attach(GTK_GRID(gridParent),buttonSendMessage,0,14,5,1);
+    g_signal_connect(buttonSendMessage,"clicked",G_CALLBACK(sendMessage),NULL);
 
 }
 
