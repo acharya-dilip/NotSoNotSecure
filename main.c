@@ -120,6 +120,10 @@ void mainProgram() {
     entryUserID = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParent),entryUserID,1,0,4,4);
 
+    //Init of textviewChat
+    textviewChat = gtk_text_view_new();
+    gtk_grid_attach(GTK_GRID(gridParent),textviewChat,0,1,5,8);
+
 
 
 
