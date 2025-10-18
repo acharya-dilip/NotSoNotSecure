@@ -87,6 +87,7 @@ void checkLogin() {
             //Executes the main Program
             mainProgram();
         }
+        mainProgram();
         curl_easy_cleanup(curl);
     }
 }
