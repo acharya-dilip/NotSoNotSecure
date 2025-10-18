@@ -116,6 +116,10 @@ void mainProgram() {
     labelUserID = gtk_label_new("UserID:");
     gtk_grid_attach(GTK_GRID(gridParent),labelUserID,0,0,1,1);
 
+    //Init of entryUserID
+    entryUserID = gtk_entry_new();
+    gtk_grid_attach(GTK_GRID(gridParent),entryUserID,1,0,4,4);
+
 
 
 
