@@ -8,6 +8,7 @@
 void checkLogin();
 void mainProgram();
 void sendMessage();
+void closeProgram();
 
 //Global Variables from windowLogin
     GtkWidget *windowLogin;
@@ -111,6 +112,7 @@ void mainProgram() {
     gtk_window_set_default_size(GTK_WINDOW(windowMain),380,400);
     gtk_window_set_title(GTK_WINDOW(windowMain),"NotSoNotSecure");
     gtk_window_present(GTK_WINDOW(windowMain));
+    g_signal_connect(windowMain,"destroy",G_CALLBACK(closeProgram),NULL);
 
     //Init of gridParent
     gridParent = gtk_grid_new();
@@ -165,6 +167,10 @@ void mainProgram() {
     gtk_grid_attach(GTK_GRID(gridParent),buttonSendMessage,0,14,5,1);
     g_signal_connect(buttonSendMessage,"clicked",G_CALLBACK(sendMessage),NULL);
 
+}
+
+void closeProgram() {
+    gtk_window_destroy(GTK_WINDOW(windowLogin));
 }
 
 void sendMessage() {
