@@ -107,6 +107,11 @@ void mainProgram() {
     gtk_window_set_title(GTK_WINDOW(windowMain),"NotSoNotSecure");
     gtk_window_present(GTK_WINDOW(windowMain));
 
+    //Init of gridParent
+    gridParent = gtk_grid_new();
+    gtk_window_set_child(GTK_WINDOW(windowMain),gridParent);
+
+
 
 
 }
