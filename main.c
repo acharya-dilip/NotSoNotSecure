@@ -123,10 +123,13 @@ void mainProgram() {
     //init of labelUserID
     labelUserID = gtk_label_new("UserID:");
     gtk_grid_attach(GTK_GRID(gridParent),labelUserID,0,0,1,1);
+    //Margins & Paddings
+    gtk_widget_set_halign(labelUserID,GTK_ALIGN_START);
 
     //Init of entryUserID
     entryUserID = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParent),entryUserID,1,0,4,1);
+    gtk_widget_set_halign(entryUserID,GTK_ALIGN_START);
 
     //Init of textviewChat
     textviewChat = gtk_text_view_new();
