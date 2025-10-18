@@ -8,7 +8,7 @@
 void checkLogin();
 void mainProgram();
 void sendMessage();
-void updateChat(char[1024]);
+void updateChat();
 void closeProgram();
 
 //Global Variables from windowLogin
@@ -189,16 +189,17 @@ void sendMessage() {
     }
     if (res==CURLE_OK) {
         gtk_editable_set_text(GTK_EDITABLE(entryMessage),"");
+        updateChat();
     }
 
     curl_easy_cleanup(curl);
 }
 
-void updateChat(char updateText[1024]) {
+void updateChat() {
     GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
     GtkTextIter end;
     gtk_text_buffer_get_end_iter(chatroom,&end);
-    gtk_text_buffer_insert(chatroom,&end,updateText,-1);
+
 }
 
 int main(int argc, char **argv){
