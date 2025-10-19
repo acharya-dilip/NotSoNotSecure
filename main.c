@@ -9,6 +9,7 @@ void checkLogin();
 void mainProgram();
 void sendMessage();
 void updateChat();
+void periodicMessageFetch();
 size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp);
 void closeProgram();
 
@@ -191,7 +192,7 @@ void sendMessage() {
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
         res=curl_easy_perform(curl);
         if (res==CURLE_OK) {
-            snprintf(globalAddText,sizeof(globalAddText),"\n %s$ \n %s",
+            snprintf(globalAddText,sizeof(globalAddText),"\n \n %s$ \n %s",
                 gtk_editable_get_text(GTK_EDITABLE(entryUserID)),
                 gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
             updateChat();
@@ -212,6 +213,11 @@ void updateChat() {
     gtk_text_buffer_insert(chatroom,&end,globalAddText,-1);
 
 }
+
+void periodicMessageFetch() {
+
+}
+
 
 size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp) {
     size_t total = size * nmemb;
