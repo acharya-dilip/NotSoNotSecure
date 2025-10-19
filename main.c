@@ -191,10 +191,12 @@ void sendMessage() {
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
         res=curl_easy_perform(curl);
         if (res==CURLE_OK) {
-            gtk_editable_set_text(GTK_EDITABLE(entryMessage),"");
-            snprintf(globalAddText,sizeof(globalAddText),"\\n %s \\n%s",gtk_editable_get_text(GTK_EDITABLE(entryUserID)),
-                 gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
+            snprintf(globalAddText,sizeof(globalAddText),"\n %s$ \n %s",
+                gtk_editable_get_text(GTK_EDITABLE(entryUserID)),
+                gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
             updateChat();
+            gtk_editable_set_text(GTK_EDITABLE(entryMessage),"");
+
         }
     }
 
