@@ -11,7 +11,6 @@ void mainProgram();
 void sendMessage();
 void updateChat();
 void fetchMessage();
-gboolean periodicMessageFetch(gpointer user_data);
 size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp);
 void closeProgram();
 
@@ -99,7 +98,6 @@ void checkLogin() {
             g_timeout_add_seconds(4,periodicMessageFetch,NULL);
         }
         mainProgram();
-        g_timeout_add_seconds(4,periodicMessageFetch,NULL);
         curl_easy_cleanup(curl);
     }
 }
@@ -189,7 +187,7 @@ void sendMessage() {
     if (curl) {
         curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
         char message[1024];
-        snprintf(message, sizeof(message), "{\"text\": \"%s$ \\n %s\"}",
+        snprintf(message, sizeof(message), "{\"text\": \"%s$ \n %s\"}",
                  gtk_editable_get_text(GTK_EDITABLE(entryUserID)),
                  gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
         curl_easy_setopt(curl,CURLOPT_POSTFIELDS,message);
@@ -210,7 +208,7 @@ void sendMessage() {
 }
 
 void updateChat() {
-    printf("updateChat is run");
+    //printf("updateChat is run");
     GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
     GtkTextIter end;
     gtk_text_buffer_get_end_iter(chatroom,&end);
@@ -219,10 +217,6 @@ void updateChat() {
 }
 
 
-gboolean periodicMessageFetch(gpointer user_data) {
-    fetchMessage();
-    return TRUE;
-}
 
 
 void fetchMessage() {
@@ -230,7 +224,7 @@ void fetchMessage() {
     CURLcode res;
     char temp[1024];
     if (curl) {
-        curl_easy_setopt(curl,CURLOPT_URL,"https://docs.google.com/spreadsheets/d/e/2PACX-1vTalxUX6UeTIv0PcK7zqYOln7I5EGF2O5kfzkOoAzq9MO7aofcCjHASQ8hywsN4U2KRp6oncNWeuFcn/pub?output=csv");
+        curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
         curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_callback);
         curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
@@ -238,8 +232,8 @@ void fetchMessage() {
         res=curl_easy_perform(curl);
     }
     if (res==CURLE_OK) {
-        if (temp!=globalAddText) {
-            strcpy(globalAddText,temp);
+        if (strcmp(temp,globalAddText)!=0) {
+            snprintf(globalAddText,sizeof(globalAddText)," \n %s",temp);
             updateChat();
         }
  ;   }
