@@ -150,7 +150,6 @@ void mainProgram() {
     textviewChat = gtk_text_view_new();
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(textviewChat), GTK_WRAP_WORD_CHAR);
     gtk_text_view_set_editable(GTK_TEXT_VIEW(textviewChat),FALSE);
-
     //Init of windowChat
     windowChat = gtk_scrolled_window_new();
     gtk_grid_attach(GTK_GRID(gridParent),windowChat,0,1,5,5);
@@ -223,6 +222,12 @@ void periodicMessageFetch() {
         curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_callback);
         curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
         res=curl_easy_perform(curl);
+    }
+    if (res==CURLE_OK) {
+        if (temp!=globalAddText) {
+            strcpy(globalAddText,temp);
+            updateChat();
+        }
     }
     curl_easy_cleanup(curl);
 }
