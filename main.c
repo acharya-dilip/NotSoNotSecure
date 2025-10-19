@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
+#include <glib.h>
 #include <curl/curl.h>
 
 
@@ -10,7 +11,7 @@ void mainProgram();
 void sendMessage();
 void updateChat();
 void fetchMessage();
-void periodicMessageFetch();
+gboolean periodicMessageFetch(gpointer user_data);
 size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp);
 void closeProgram();
 
@@ -95,8 +96,10 @@ void checkLogin() {
             gtk_widget_set_visible(windowLogin,FALSE);
             //Executes the main Program
             mainProgram();
+            g_timeout_add_seconds(4,periodicMessageFetch,NULL);
         }
         mainProgram();
+        g_timeout_add_seconds(4,periodicMessageFetch,NULL);
         curl_easy_cleanup(curl);
     }
 }
@@ -173,8 +176,6 @@ void mainProgram() {
     gtk_grid_attach(GTK_GRID(gridParent),buttonSendMessage,0,14,5,1);
     g_signal_connect(buttonSendMessage,"clicked",G_CALLBACK(sendMessage),NULL);
 
-    //test
-    fetchMessage();
 
 }
 
@@ -217,6 +218,13 @@ void updateChat() {
 
 }
 
+
+gboolean periodicMessageFetch(gpointer user_data) {
+    fetchMessage();
+    return TRUE;
+}
+
+
 void fetchMessage() {
     CURL *curl=curl_easy_init();
     CURLcode res;
@@ -234,8 +242,9 @@ void fetchMessage() {
             strcpy(globalAddText,temp);
             updateChat();
         }
-    }
+ ;   }
     curl_easy_cleanup(curl);
+
 }
 
 
