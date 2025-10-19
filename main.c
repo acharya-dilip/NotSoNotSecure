@@ -215,7 +215,16 @@ void updateChat() {
 }
 
 void periodicMessageFetch() {
-
+    CURL *curl=curl_easy_init();
+    CURLcode res;
+    char temp[1024];
+    if (curl) {
+        curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
+        curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_callback);
+        curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
+        res=curl_easy_perform(curl);
+    }
+    curl_easy_cleanup(curl);
 }
 
 
