@@ -189,7 +189,7 @@ void sendMessage() {
                  gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
         curl_easy_setopt(curl,CURLOPT_POSTFIELDS,message);
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
-        curl_easy_perform(curl);
+        res=curl_easy_perform(curl);
         if (res==CURLE_OK) {
             gtk_editable_set_text(GTK_EDITABLE(entryMessage),"");
             snprintf(globalAddText,sizeof(globalAddText),"\\n %s \\n%s",gtk_editable_get_text(GTK_EDITABLE(entryUserID)),
@@ -203,6 +203,7 @@ void sendMessage() {
 }
 
 void updateChat() {
+    printf("updateChat is run");
     GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
     GtkTextIter end;
     gtk_text_buffer_get_end_iter(chatroom,&end);
