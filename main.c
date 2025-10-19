@@ -190,11 +190,12 @@ void sendMessage() {
         curl_easy_setopt(curl,CURLOPT_POSTFIELDS,message);
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
         curl_easy_perform(curl);
+        if (res==CURLE_OK) {
+            gtk_editable_set_text(GTK_EDITABLE(entryMessage),"");
+            strcpy(globalAddText,message);
+        }
     }
-    if (res==CURLE_OK) {
-        gtk_editable_set_text(GTK_EDITABLE(entryMessage),"");
-        updateChat();
-    }
+
 
     curl_easy_cleanup(curl);
 }
