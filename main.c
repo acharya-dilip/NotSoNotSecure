@@ -9,7 +9,11 @@ void checkLogin();
 void mainProgram();
 void sendMessage();
 void updateChat();
+size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp);
 void closeProgram();
+
+//Global Thinggies
+char globalAddText[1024];
 
 //Global Variables from windowLogin
     GtkWidget *windowLogin;
@@ -196,10 +200,23 @@ void sendMessage() {
 }
 
 void updateChat() {
-    GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
-    GtkTextIter end;
-    gtk_text_buffer_get_end_iter(chatroom,&end);
+    // GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
+    // GtkTextIter end;
+    // gtk_text_buffer_get_end_iter(chatroom,&end);
+    CURL *curl=curl_easy_init();
+    gchar *temp;
+    if (curl) {
+        curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
+        curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_callback);
+        curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
+    }
 
+}
+
+size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp) {
+    size_t total = size * nmemb;
+    strncat((char *)userp, (char *)contents, total);
+    return total;
 }
 
 int main(int argc, char **argv){
