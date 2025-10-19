@@ -201,16 +201,10 @@ void sendMessage() {
 }
 
 void updateChat() {
-    // GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
-    // GtkTextIter end;
-    // gtk_text_buffer_get_end_iter(chatroom,&end);
-    CURL *curl=curl_easy_init();
-    gchar *temp;
-    if (curl) {
-        curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
-        curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_callback);
-        curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
-    }
+    GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
+    GtkTextIter end;
+    gtk_text_buffer_get_end_iter(chatroom,&end);
+    gtk_text_buffer_insert(chatroom,&end,globalAddText,-1);
 
 }
 
