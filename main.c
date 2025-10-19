@@ -173,6 +173,9 @@ void mainProgram() {
     gtk_grid_attach(GTK_GRID(gridParent),buttonSendMessage,0,14,5,1);
     g_signal_connect(buttonSendMessage,"clicked",G_CALLBACK(sendMessage),NULL);
 
+    //test
+    fetchMessage();
+
 }
 
 void closeProgram() {
@@ -219,9 +222,11 @@ void fetchMessage() {
     CURLcode res;
     char temp[1024];
     if (curl) {
-        curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
+        curl_easy_setopt(curl,CURLOPT_URL,"https://docs.google.com/spreadsheets/d/e/2PACX-1vTalxUX6UeTIv0PcK7zqYOln7I5EGF2O5kfzkOoAzq9MO7aofcCjHASQ8hywsN4U2KRp6oncNWeuFcn/pub?output=csv");
         curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_callback);
         curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
+        curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
+
         res=curl_easy_perform(curl);
     }
     if (res==CURLE_OK) {
