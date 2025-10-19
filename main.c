@@ -9,6 +9,7 @@ void checkLogin();
 void mainProgram();
 void sendMessage();
 void updateChat();
+void fetchMessage();
 void periodicMessageFetch();
 size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp);
 void closeProgram();
@@ -213,7 +214,7 @@ void updateChat() {
 
 }
 
-void periodicMessageFetch() {
+void fetchMessage() {
     CURL *curl=curl_easy_init();
     CURLcode res;
     char temp[1024];
