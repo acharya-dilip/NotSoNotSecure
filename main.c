@@ -25,13 +25,15 @@ char globalAddText[1024];
     GtkWidget *checkButtonSaveLogin;
 static void activate(GtkApplication *app,gpointer user_data) {
 
+    FILE *file = fopen("credentials.txt","a");
+    fclose(file);
+
     GtkWidget *gridParentLogin;
     GtkWidget *labelGmail;
     GtkWidget *labelPassword;
     GtkWidget *buttonLogin;
 
-    FILE *file = fopen("logininfo.txt","a");
-    fclose(file);
+
 
     //Initialisation of windowLogin
     windowLogin = gtk_application_window_new(app);
@@ -80,6 +82,7 @@ static void activate(GtkApplication *app,gpointer user_data) {
     //Init of checkButtonSaveLogin
     checkButtonSaveLogin = gtk_check_button_new_with_label("Save Login Info");
     gtk_grid_attach(GTK_GRID(gridParentLogin),checkButtonSaveLogin,1,2,1,1);
+    g_signal_connect(checkButtonSaveLogin,"toggled",G_CALLBACK(saveLogin),NULL);
 
     //Initialisation of buttonLogin
     buttonLogin = gtk_button_new_with_label("Login");
