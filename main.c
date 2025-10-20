@@ -95,9 +95,10 @@ void checkLogin() {
             gtk_widget_set_visible(windowLogin,FALSE);
             //Executes the main Program
             mainProgram();
-            g_timeout_add_seconds(4,periodicMessageFetch,NULL);
+            fetchMessage();
         }
         mainProgram();
+        fetchMessage();
         curl_easy_cleanup(curl);
     }
 }
@@ -114,6 +115,7 @@ void mainProgram() {
     GtkWidget *gridParent;
     GtkWidget *labelUserID;
     GtkWidget *buttonSendMessage;
+    GtkWidget *buttonFetchMessage;
 
     //Init of windowMain
     windowMain = gtk_window_new();
@@ -141,12 +143,20 @@ void mainProgram() {
 
     //Init of entryUserID
     entryUserID = gtk_entry_new();
-    gtk_grid_attach(GTK_GRID(gridParent),entryUserID,1,0,4,1);
+    gtk_grid_attach(GTK_GRID(gridParent),entryUserID,1,0,3,1);
     gtk_editable_set_text(GTK_EDITABLE(entryUserID),gtk_editable_get_text(GTK_EDITABLE(entryGmail)));
     //margins & Paddings
     gtk_widget_set_halign(entryUserID,GTK_ALIGN_START);
-    gtk_widget_set_size_request(entryUserID,290,-1);
+    gtk_widget_set_size_request(entryUserID,240,-1);
     gtk_widget_set_margin_start(entryUserID,10);
+    //Init of buttonFetchMessage
+    buttonFetchMessage = gtk_button_new_with_label("🔃");
+    gtk_grid_attach(GTK_GRID(gridParent),buttonFetchMessage,4,0,1,1);
+    //Margins & Paddings
+    gtk_widget_set_halign(buttonFetchMessage,GTK_ALIGN_END);
+    gtk_widget_set_size_request(buttonFetchMessage,30,-1);
+    gtk_widget_set_margin_start(buttonFetchMessage,10);
+    gtk_widget_set_margin_start(buttonFetchMessage,10);
 
     //Init of textviewChat
     textviewChat = gtk_text_view_new();
@@ -187,7 +197,7 @@ void sendMessage() {
     if (curl) {
         curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
         char message[1024];
-        snprintf(message, sizeof(message), "{\"text\": \"%s$ \n %s\"}",
+        snprintf(message, sizeof(message), "{\"text\": \"%s$ \\n %s\"}",
                  gtk_editable_get_text(GTK_EDITABLE(entryUserID)),
                  gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
         curl_easy_setopt(curl,CURLOPT_POSTFIELDS,message);
@@ -209,6 +219,13 @@ void sendMessage() {
 
 void updateChat() {
     //printf("updateChat is run");
+    int i,j;
+    for (i = 0, j = 0; globalAddText[i] != '\0'; i++) {
+    if (strchr("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .!?$#@_-\n", globalAddText[i]))
+        globalAddText[j++] = globalAddText[i];
+}
+globalAddText[j] = '\0';
+
     GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
     GtkTextIter end;
     gtk_text_buffer_get_end_iter(chatroom,&end);
@@ -224,7 +241,7 @@ void fetchMessage() {
     CURLcode res;
     char temp[1024];
     if (curl) {
-        curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
+        curl_easy_setopt(curl,CURLOPT_URL,"https://docs.google.com/spreadsheets/d/e/2PACX-1vTalxUX6UeTIv0PcK7zqYOln7I5EGF2O5kfzkOoAzq9MO7aofcCjHASQ8hywsN4U2KRp6oncNWeuFcn/pub?output=csv");
         curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_callback);
         curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
@@ -232,14 +249,17 @@ void fetchMessage() {
         res=curl_easy_perform(curl);
     }
     if (res==CURLE_OK) {
+        char msg[1024];
+        sscanf(temp, "{\"cellA1\":\"%[^\"]\"}", msg);
         if (strcmp(temp,globalAddText)!=0) {
-            snprintf(globalAddText,sizeof(globalAddText)," \n %s",temp);
+            snprintf(globalAddText,sizeof(globalAddText)," \n %s",msg);
             updateChat();
         }
- ;   }
+    }
     curl_easy_cleanup(curl);
 
 }
+
 
 
 size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp) {
