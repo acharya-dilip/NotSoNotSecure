@@ -21,10 +21,10 @@ char globalAddText[1024];
     GtkWidget *windowLogin;
     GtkWidget *entryGmail;
     GtkWidget *entryPassword;
+    GtkWidget *checkButtonSaveLogin;
 static void activate(GtkApplication *app,gpointer user_data) {
 
     GtkWidget *gridParentLogin;
-
     GtkWidget *labelGmail;
     GtkWidget *labelPassword;
     GtkWidget *buttonLogin;
@@ -71,9 +71,13 @@ static void activate(GtkApplication *app,gpointer user_data) {
     entryPassword = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParentLogin),entryPassword,1,1,1,1);
 
+    //Init of checkButtonSaveLogin
+    checkButtonSaveLogin = gtk_check_button_new_with_label("Save Login Info");
+    gtk_grid_attach(GTK_GRID(gridParentLogin),checkButtonSaveLogin,1,2,1,1);
+
     //Initialisation of buttonLogin
     buttonLogin = gtk_button_new_with_label("Login");
-    gtk_grid_attach(GTK_GRID(gridParentLogin),buttonLogin,1,2,1,1);
+    gtk_grid_attach(GTK_GRID(gridParentLogin),buttonLogin,1,3,1,1);
     g_signal_connect(buttonLogin,"clicked",G_CALLBACK(checkLogin),NULL);
 
 }
@@ -196,7 +200,7 @@ void sendMessage() {
     if (curl) {
         curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
         char message[1024];
-        snprintf(message, sizeof(message), "{\"text\": \"%s$ \\n %s\"}",
+        snprintf(message, sizeof(message), "{\"text\": \"%s$  %s\"}",
                  gtk_editable_get_text(GTK_EDITABLE(entryUserID)),
                  gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
         curl_easy_setopt(curl,CURLOPT_POSTFIELDS,message);
@@ -217,14 +221,6 @@ void sendMessage() {
 }
 
 void updateChat() {
-    // printf("updateChat is run");
-//     int i,j;
-//     for (i = 0, j = 0; globalAddText[i] != '\0'; i++) {
-//     if (strchr("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .!?$#@_-\n", globalAddText[i]))
-//         globalAddText[j++] = globalAddText[i];
-// }
-// globalAddText[j] = '\0';
-
     GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
     GtkTextIter end;
     gtk_text_buffer_get_end_iter(chatroom,&end);
@@ -239,18 +235,18 @@ void fetchMessage() {
     CURL *curl=curl_easy_init();
     CURLcode res;
     if (curl) {
-        curl_easy_setopt(curl,CURLOPT_URL,"https://docs.google.com/spreadsheets/d/e/2PACX-1vTalxUX6UeTIv0PcK7zqYOln7I5EGF2O5kfzkOoAzq9MO7aofcCjHASQ8hywsN4U2KRp6oncNWeuFcn/pub?output=csv");
+        curl_easy_setopt(curl,CURLOPT_URL,"https://script.google.com/macros/s/AKfycbzU5zH4qlf7ZDO7LWeURhVDw2aVFcpqtyQeaVZ1sxlCANcgJLhLtrXhY_00fz4e0jAm/exec");
         curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_callback);
-        curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
+        //curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
-        printf(temp);
 
         res=curl_easy_perform(curl);
     }
     if (res==CURLE_OK) {
-
-        if (strcmp(temp,globalAddText)!=0) {
-            snprintf(globalAddText,sizeof(globalAddText)," \n %s",temp);
+        char msg[1024];
+        sscanf(temp, "{\"cellA1\":\"%[^\"]\"}", msg);
+        if (strcmp(msg,globalAddText)!=0) {
+            snprintf(globalAddText,sizeof(globalAddText)," \n %s",msg);
             updateChat();
         }
     }
