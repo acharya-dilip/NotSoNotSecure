@@ -7,6 +7,7 @@
 
 
 void checkLogin();
+void saveLogin();
 void mainProgram();
 void sendMessage();
 void updateChat();
@@ -105,6 +106,9 @@ void checkLogin() {
     }
 }
 
+void saveLogin() {
+
+}
 
 //Globalised Variables from mainProgram
     GtkWidget *windowMain;
