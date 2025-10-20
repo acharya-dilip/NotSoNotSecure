@@ -203,7 +203,7 @@ void sendMessage() {
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
         res=curl_easy_perform(curl);
         if (res==CURLE_OK) {
-            snprintf(globalAddText,sizeof(globalAddText),"\n \n %s$ \n %s",
+            snprintf(globalAddText,sizeof(globalAddText),"\n %s$ \n %s",
                 gtk_editable_get_text(GTK_EDITABLE(entryUserID)),
                 gtk_editable_get_text(GTK_EDITABLE(entryMessage)));
             updateChat();
@@ -217,13 +217,13 @@ void sendMessage() {
 }
 
 void updateChat() {
-    //printf("updateChat is run");
-    int i,j;
-    for (i = 0, j = 0; globalAddText[i] != '\0'; i++) {
-    if (strchr("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .!?$#@_-\n", globalAddText[i]))
-        globalAddText[j++] = globalAddText[i];
-}
-globalAddText[j] = '\0';
+    // printf("updateChat is run");
+//     int i,j;
+//     for (i = 0, j = 0; globalAddText[i] != '\0'; i++) {
+//     if (strchr("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .!?$#@_-\n", globalAddText[i]))
+//         globalAddText[j++] = globalAddText[i];
+// }
+// globalAddText[j] = '\0';
 
     GtkTextBuffer *chatroom = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textviewChat));
     GtkTextIter end;
@@ -233,25 +233,24 @@ globalAddText[j] = '\0';
 }
 
 
-
-
+//Temp global variable
+    char temp[1024];
 void fetchMessage() {
     CURL *curl=curl_easy_init();
     CURLcode res;
-    char temp[1024];
     if (curl) {
         curl_easy_setopt(curl,CURLOPT_URL,"https://docs.google.com/spreadsheets/d/e/2PACX-1vTalxUX6UeTIv0PcK7zqYOln7I5EGF2O5kfzkOoAzq9MO7aofcCjHASQ8hywsN4U2KRp6oncNWeuFcn/pub?output=csv");
         curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_callback);
         curl_easy_setopt(curl,CURLOPT_WRITEDATA,temp);
         curl_easy_setopt(curl,CURLOPT_FOLLOWLOCATION,1L);
+        printf(temp);
 
         res=curl_easy_perform(curl);
     }
     if (res==CURLE_OK) {
-        char msg[1024];
-        sscanf(temp, "{\"cellA1\":\"%[^\"]\"}", msg);
+
         if (strcmp(temp,globalAddText)!=0) {
-            snprintf(globalAddText,sizeof(globalAddText)," \n %s",msg);
+            snprintf(globalAddText,sizeof(globalAddText)," \n %s",temp);
             updateChat();
         }
     }
@@ -261,9 +260,11 @@ void fetchMessage() {
 
 
 
-size_t write_callback(void *contents, size_t size, size_t nmemb, void *userp) {
-    size_t total = size * nmemb;
-    strncat((char *)userp, (char *)contents, total);
+size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userdata) {
+    size_t total = size *nmemb;
+    if (total >=1024) total = 1023;
+    memcpy(temp,ptr,total);
+    temp[total]='\0';
     return total;
 }
 
