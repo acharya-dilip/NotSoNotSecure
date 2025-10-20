@@ -5,7 +5,7 @@
 
 
 
-
+void checkSavedLogin();
 void checkLogin();
 void saveLogin();
 void mainProgram();
@@ -29,6 +29,9 @@ static void activate(GtkApplication *app,gpointer user_data) {
     GtkWidget *labelGmail;
     GtkWidget *labelPassword;
     GtkWidget *buttonLogin;
+
+    FILE *file = fopen("logininfo.txt","a");
+    fclose(file);
 
     //Initialisation of windowLogin
     windowLogin = gtk_application_window_new(app);
@@ -72,6 +75,8 @@ static void activate(GtkApplication *app,gpointer user_data) {
     entryPassword = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParentLogin),entryPassword,1,1,1,1);
 
+    checkSavedLogin();
+
     //Init of checkButtonSaveLogin
     checkButtonSaveLogin = gtk_check_button_new_with_label("Save Login Info");
     gtk_grid_attach(GTK_GRID(gridParentLogin),checkButtonSaveLogin,1,2,1,1);
@@ -107,13 +112,24 @@ void checkLogin() {
 }
 
 void saveLogin() {
-    FILE *file;
-    fopen(file,"credentials.txt","w");
-    fprintf("credentials.txt","email=%s"
-                              "pass=%s"
-                              ,gtk_editable_get_text(GTK_EDITABLE(entryGmail))
-                              ,gtk_editable_get_text(GTK_EDITABLE(entryPassword)));
-    fclose(file);
+    FILE *file=fopen("credentials.txt","w");
+    if (file) {
+        fprintf(file,"%s %s"
+        ,gtk_editable_get_text(GTK_EDITABLE(entryGmail))
+        ,gtk_editable_get_text(GTK_EDITABLE(entryPassword)));
+        fclose(file);
+    }
+}
+
+void checkSavedLogin() {
+    char gmail[50];
+    char password[50];
+    FILE *file = fopen("credentials.txt","r");
+    fscanf(file,
+        "%s %s",
+        &gmail,&password);
+    gtk_editable_set_text(GTK_EDITABLE(entryGmail),gmail);
+    gtk_editable_set_text(GTK_EDITABLE(entryPassword),password);
 }
 
 //Globalised Variables from mainProgram
