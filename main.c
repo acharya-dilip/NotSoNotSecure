@@ -76,6 +76,7 @@ static void activate(GtkApplication *app,gpointer user_data) {
     //Initalisation of entryPassword
     entryPassword = gtk_entry_new();
     gtk_grid_attach(GTK_GRID(gridParentLogin),entryPassword,1,1,1,1);
+    gtk_entry_set_visibility(GTK_ENTRY(entryPassword),FALSE);
 
     checkSavedLogin();
 
@@ -109,7 +110,6 @@ void checkLogin() {
             //Executes the main Program
             mainProgram();
         }
-        mainProgram();
         curl_easy_cleanup(curl);
     }
 }
@@ -282,8 +282,6 @@ void fetchMessage() {
     curl_easy_cleanup(curl);
 
 }
-
-
 
 size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userdata) {
     size_t total = size *nmemb;
