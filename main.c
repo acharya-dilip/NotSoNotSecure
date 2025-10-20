@@ -95,10 +95,8 @@ void checkLogin() {
             gtk_widget_set_visible(windowLogin,FALSE);
             //Executes the main Program
             mainProgram();
-            fetchMessage();
         }
         mainProgram();
-        fetchMessage();
         curl_easy_cleanup(curl);
     }
 }
@@ -152,6 +150,7 @@ void mainProgram() {
     //Init of buttonFetchMessage
     buttonFetchMessage = gtk_button_new_with_label("🔃");
     gtk_grid_attach(GTK_GRID(gridParent),buttonFetchMessage,4,0,1,1);
+    g_signal_connect(buttonFetchMessage,"clicked",G_CALLBACK(fetchMessage),NULL);
     //Margins & Paddings
     gtk_widget_set_halign(buttonFetchMessage,GTK_ALIGN_END);
     gtk_widget_set_size_request(buttonFetchMessage,30,-1);
