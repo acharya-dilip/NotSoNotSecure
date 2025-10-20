@@ -107,7 +107,13 @@ void checkLogin() {
 }
 
 void saveLogin() {
-
+    FILE *file;
+    fopen(file,"credentials.txt","w");
+    fprintf("credentials.txt","email=%s"
+                              "pass=%s"
+                              ,gtk_editable_get_text(GTK_EDITABLE(entryGmail))
+                              ,gtk_editable_get_text(GTK_EDITABLE(entryPassword)));
+    fclose(file);
 }
 
 //Globalised Variables from mainProgram
